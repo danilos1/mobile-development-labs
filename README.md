@@ -2,7 +2,7 @@
 
 This repo is for labworks of 'Mobile Development' discipline at the 3rd course
 
-## Actual application appearence:
+### Actual application appearence:
 
 ![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app1.png)
 ![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app2.png)
