@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">MobileDevelopmentLabs</string>
-    <string name="greeting">Соловйов Даніїл\nГрупа ІО-83\nЗК ІО-8324\n</string>
-    <string name="tab_item_general">General</string>
-    <string name="tab_item_exampletab">Example Tab</string>
-    <string name="hello_blank_fragment">An example of the second tab at tab layout</string>
-</resources>
