@@ -1,6 +1,6 @@
 # Mobile Development
 
-## This repo is for labworks of 'Mobile Development' discipline at the 3rd course
+This repo is for labworks of 'Mobile Development' discipline at the 3rd course
 
 ## Actual application appearence:
 
