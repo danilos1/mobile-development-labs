@@ -108,7 +108,7 @@ public class StudentParser {
 
         String[] s = studentsRow.split(";");
         return Arrays.stream(s)
-                .map(student -> student.split("-"))
+                .map(student -> student.split(" - "))
                 .collect(Collectors.toMap(strings -> new Student(strings[0].trim()), strings -> strings[1].trim()));
     }
 

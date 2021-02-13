@@ -47,7 +47,7 @@ public class Lab12 {
 
         // task 5
         System.out.println("\n============== Task 5 ==============");
-        int floor = 85;
+        int floor = 60;
         Map<String, List<Student>>  successfulStudents = studentParser.filterStudents(studentsWithFinalMarks, floor);
         System.out.println(successfulStudents);
 
