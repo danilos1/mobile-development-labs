@@ -3,10 +3,9 @@
 This repo is for labworks of 'Mobile Development' discipline at the 3rd course
 
 ### Getting Started
-
 To run the application and look at whole functionality, you should download and install the next ```.apk``` file of the app:
 
-
+[mobile-development-labsio8324.apk](/mobile-development-labsio8324.apk "The application installation file")
 
 ### Each branch represents some labwork with own aim:
 - main - the final result of all laboratory works
