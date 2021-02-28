@@ -16,4 +16,10 @@ This repo is for labworks of 'Mobile Development' discipline at the 3rd course
  function (y = log(x)) and a pie chart, which consist of the following pieces: 10%,20%,25%,5% and 40%.
 - ...
 
+## Labwork 1.1 & Labwork 1.2
+![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app1.png)
+
+## Labwork 2
+![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app3.png)
+![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app4.png)
 
