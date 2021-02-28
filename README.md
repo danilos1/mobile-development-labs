@@ -2,10 +2,11 @@
 
 This repo is for labworks of 'Mobile Development' discipline at the 3rd course
 
-### Actual application appearence:
+### Getting Started
 
-![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app1.png)
-![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app2.png)
+To run the application and look at whole functionality, you should download and install the next ```.apk``` file of the app:
+
+
 
 ### Each branch represents some labwork with own aim:
 - main - the final result of all laboratory works
