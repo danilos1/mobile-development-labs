@@ -31,13 +31,14 @@ import java.util.Objects;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 import ua.kpi.comsys.io8324.R;
+import ua.kpi.comsys.io8324.utils.Range;
 
 public class DrawingFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
     private SegmentedGroup drawingSegmented;
     private LineChart lineChart;
     private PieChart pieChart;
-    public static final int N = 100;
-    public static final float DELTA = 0.5f;
+    public static final Range lineChartRange = new Range(0, 4);
+    public static final float DELTA = 0.01f;
     public static final float[] PIE_DATA = {10, 20, 25, 5, 40};
     public static final List<Integer> PIE_COLORS = new ArrayList<>(Arrays.asList(
             Color.YELLOW, Color.GREEN, Color.parseColor("#000080"), Color.RED, Color.BLUE
@@ -84,13 +85,12 @@ public class DrawingFragment extends Fragment implements RadioGroup.OnCheckedCha
                 lineDataSet.setColor(Color.MAGENTA);
                 lineDataSet.setLineWidth(1.5f);
                 LineData lineData = new LineData(lineDataSet);
-
                 lineChart.setDescription(chartDescription);
                 lineChart.getLegend().setEnabled(false);
                 lineChart.setData(lineData);
                 lineChart.invalidate();
-
                 break;
+
             case R.id.pieChartButton:
                 lineChart.setVisibility(View.GONE);
                 pieChart.setVisibility(View.VISIBLE);
@@ -100,10 +100,12 @@ public class DrawingFragment extends Fragment implements RadioGroup.OnCheckedCha
                 pieData.setDrawValues(false);
                 pieChart.setDescription(chartDescription);
                 pieChart.setData(pieData);
+                pieChart.setHoleRadius(0);
+                pieChart.setDrawHoleEnabled(false);
                 pieChart.getLegend().setEnabled(false);
                 pieChart.invalidate();
-
                 break;
+
             default:
 
         }
@@ -111,9 +113,9 @@ public class DrawingFragment extends Fragment implements RadioGroup.OnCheckedCha
 
     private ArrayList<Entry> loadLineData() {
         ArrayList<Entry> dataSet = new ArrayList<>();
-        for (int i = 0; i < N; i++) {
-            float x = i + DELTA;
-            dataSet.add(new Entry(x, (float) Math.log(x)));
+        float i = lineChartRange.getStart() + DELTA;
+        for (; i < lineChartRange.getEnd(); i+=DELTA) {
+            dataSet.add(new Entry(i, (float) Math.log(i)));
         }
 
         return dataSet;
@@ -121,8 +123,8 @@ public class DrawingFragment extends Fragment implements RadioGroup.OnCheckedCha
 
     private ArrayList<PieEntry> loadPieData(float ... percents) {
         ArrayList<PieEntry> pieDataSet = new ArrayList<>();
-        for (int i = 0; i < percents.length; i++) {
-            pieDataSet.add(new PieEntry(percents[i], percents[i]  + " %"));
+        for (float percent : percents) {
+            pieDataSet.add(new PieEntry(percent, percent + " %"));
         }
 
         return pieDataSet;

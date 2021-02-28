@@ -12,7 +12,8 @@ This repo is for labworks of 'Mobile Development' discipline at the 3rd course
 - lab1 - is the first labwork and it's comprised of two parts: ```1.1``` and ```1.2```. So it includes two sub-branches:
   - lab11 branch
   - and lab12 one
-- lab2 - 
+- lab2 - the labwork, in which there was demonstrated drawing two charts: a line chart for showing
+ function (y = log(x)) and a pie chart, which consist of the following pieces: 10%,20%,25%,5% and 40%.
 - ...
 
 
