@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Mobile Development Labs</string>
     <string name="greeting">Соловйов Даніїл\nГрупа ІО-83\nЗК ІО-8324\n</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
