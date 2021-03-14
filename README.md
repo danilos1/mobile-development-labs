@@ -25,6 +25,6 @@ To run the application and look at whole functionality, you should download and 
 ![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app4.png)
 
 ## Labwork 3
-![](https://github.com/danilos1/mobile-development-labs/blob/main/img/app5.png)
+
 
 
