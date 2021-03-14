@@ -51,7 +51,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
         holder.movieTitleTextView.setText(movie.getTitle());
         holder.movieYearTextView.setText(movie.getYear());
-        holder.movieRatingTextView.setText(movie.getImdbID());
+        holder.movieTypeTextView.setText(movie.getType());
     }
 
     @Override
@@ -63,14 +63,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         protected ImageView movieImageView;
         protected TextView movieTitleTextView;
         protected TextView movieYearTextView;
-        protected TextView movieRatingTextView;
+        protected TextView movieTypeTextView;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             this.movieImageView = itemView.findViewById(R.id.movieImageView);
             this.movieTitleTextView = itemView.findViewById(R.id.movieTitleTextView);
             this.movieYearTextView = itemView.findViewById(R.id.movieYearTextView);
-            this.movieRatingTextView = itemView.findViewById(R.id.movieRatingTextView);
+            this.movieTypeTextView = itemView.findViewById(R.id.movieTypeTextView);
         }
     }
 }
