@@ -14,7 +14,7 @@ To run the application and look at whole functionality, you should download and 
   - and lab12 one
 - lab2 - the labwork, in which there was demonstrated drawing two charts: a line chart for showing
  function (y = log(x)) and a pie chart, which consist of the following pieces: 10%,20%,25%,5% and 40%.
-- lab3 - in this labwork, there was parsed an array of movies in JSON format and therefore converted to table-view.
+- lab3 - in this labwork there was parsed an array of movies in JSON format and therefore converted to table-view.
 - ...
 
 ## Labwork 1.1 & Labwork 1.2
