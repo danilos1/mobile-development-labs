@@ -2,7 +2,9 @@ package ua.kpi.comsys.io8324.entity.movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
     private String imdbID;
 
     @JsonProperty("Title")

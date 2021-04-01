@@ -1,5 +1,6 @@
 package ua.kpi.comsys.io8324.tabfragments;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +27,9 @@ import ua.kpi.comsys.io8324.entity.movie.Movie;
 import ua.kpi.comsys.io8324.entity.movie.Movies;
 import ua.kpi.comsys.io8324.utils.MovieAdapter;
 
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieListener {
     private RecyclerView movieListView;
+    private List<Movie> movieList;
 
     public MoviesFragment() {
     }
@@ -44,6 +47,7 @@ public class MoviesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         this.movieListView = view.findViewById(R.id.movieListView);
 
+
         InputStream inputStream = null;
         try {
             inputStream = getContext().getAssets().open("json/movie_list.txt");
@@ -51,9 +55,18 @@ public class MoviesFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        MovieAdapter movieAdapter = new MovieAdapter(view.getContext(), Movies.getMoviesFromJsonData(inputStream));
+        this.movieList = Movies.getMoviesFromJsonData(inputStream);
+        MovieAdapter movieAdapter = new MovieAdapter(view.getContext(), movieList, this);
         movieListView.setAdapter(movieAdapter);
         movieListView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         return view;
+    }
+
+    @Override
+    public void onMovieClickListener(int position) {
+//        Intent intent = new Intent(this.getContext(), MovieInfoFragment.class);
+//        intent.putExtra("movie", movieList.get(position).toString());
+//        startActivity(intent);
+        Log.d("position: ", position+"");
     }
 }
