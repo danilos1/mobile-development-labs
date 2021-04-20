@@ -44,7 +44,5 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_house_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.statistics_icon);
         tabLayout.getTabAt(2).setIcon(R.drawable.movie_icon);
-
-
     }
 }

@@ -2,9 +2,11 @@ package ua.kpi.comsys.io8324.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,20 +15,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+    public static final String TAG = "MovieAdapter";
+
     private LayoutInflater inflater;
     private final List<Movie> movieList;
+    private List<Movie> filteredMovieList;
     private OnMovieListener onMovieListener;
+
+    public List<Movie> getActualFilteredList() {
+        return filteredMovieList;
+    }
 
     public MovieAdapter(Context context, List<Movie> movieList, OnMovieListener onMovieListener) {
         this.movieList = movieList;
         this.inflater = LayoutInflater.from(context);
         this.onMovieListener = onMovieListener;
+        this.filteredMovieList = movieList;
     }
 
     @NonNull
@@ -38,7 +49,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, int position) {
-        Movie movie = movieList.get(position);
+        Movie movie = filteredMovieList.get(position);
+        Log.d(TAG, "filter movie list: "+filteredMovieList.toString());
+        Log.d(TAG, "position: "+position);
         if (!movie.getPoster().equals("")) {
             try {
                 InputStream ims = inflater.getContext().getAssets().open(
@@ -59,7 +72,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return filteredMovieList.size();
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -88,5 +101,37 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public interface OnMovieListener {
         void onMovieClickListener(int position);
+    }
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence sequence) {
+                String key = sequence.toString();
+                if (key.isEmpty()) {
+                    filteredMovieList = movieList;
+                    Log.d(TAG, "filteredMovieList is empty: "+filteredMovieList);
+                } else {
+                    List<Movie> fltMovieList = new ArrayList<>();
+                    for (Movie movie: movieList) {
+                        if (movie.getTitle().contains(key)) {
+                            fltMovieList.add(movie);
+                        }
+                    }
+                    filteredMovieList = fltMovieList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredMovieList;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence sequence, FilterResults results) {
+                filteredMovieList = (List<Movie>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

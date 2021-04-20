@@ -1,7 +1,6 @@
 package ua.kpi.comsys.io8324.tabfragments;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,10 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -31,9 +33,15 @@ import ua.kpi.comsys.io8324.utils.AssetHelper;
 import ua.kpi.comsys.io8324.utils.MovieAdapter;
 
 public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieListener {
+    private static final String TAG = "MoviesFragment";
+
+    private MovieAdapter movieAdapter;
     private RecyclerView movieListView;
     private List<Movie> movieList;
-    private static final String TAG = "MoviesFragment";
+    private List<Movie> filteredMovieList;
+    private EditText searchEditText;
+    public CharSequence searchText = "";
+
 
     public MoviesFragment() {
     }
@@ -41,7 +49,6 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -50,6 +57,9 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         this.movieListView = view.findViewById(R.id.movieListView);
+
+        searchEditText = view.findViewById(R.id.search_movie_bar);
+
         InputStream fileInputStream = null;
         try {
             fileInputStream = AssetHelper.getInputStreamFromFile(view.getContext(), "json/movie_list.txt");
@@ -57,9 +67,31 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
             e.printStackTrace();
         }
         this.movieList = Movies.getMoviesFromJsonData(fileInputStream);
-        MovieAdapter movieAdapter = new MovieAdapter(view.getContext(), movieList, this);
+        this.filteredMovieList = movieList;
+
+        this.movieAdapter = new MovieAdapter(view.getContext(), movieList, this);
         movieListView.setAdapter(movieAdapter);
         movieListView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                movieAdapter.getFilter().filter(s);
+                filteredMovieList = movieAdapter.getActualFilteredList();
+                searchText = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filteredMovieList = movieAdapter.getActualFilteredList();
+            }
+        });
+
         return view;
     }
 
@@ -68,9 +100,10 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
     public void onMovieClickListener(int position) {
         Intent intent = new Intent(this.getContext(), MovieInfoActivity.class);
 
+        this.filteredMovieList = movieAdapter.getActualFilteredList();
         String filePath = "";
         try {
-            filePath = "movie_data/".concat(movieList.get(position)
+            filePath = "movie_data/".concat(filteredMovieList.get(position)
                     .getImdbID())
                     .concat(".txt");
 
