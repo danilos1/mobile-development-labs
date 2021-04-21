@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +20,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
+import ua.kpi.comsys.io8324.MovieAddFormActivity;
 import ua.kpi.comsys.io8324.MovieInfoActivity;
 import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.Movie;
@@ -35,13 +41,34 @@ import ua.kpi.comsys.io8324.utils.MovieAdapter;
 public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieListener {
     private static final String TAG = "MoviesFragment";
 
-    private MovieAdapter movieAdapter;
+    private static MovieAdapter movieAdapter;
     private RecyclerView movieListView;
-    private List<Movie> movieList;
-    private List<Movie> filteredMovieList;
+    private static List<Movie> movieList;
+    private static List<Movie> filteredMovieList;
     private EditText searchEditText;
     public CharSequence searchText = "";
 
+    private ItemTouchHelper.SimpleCallback itemTouchHCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int adapterPosition = viewHolder.getAdapterPosition();
+            Toast.makeText(getContext(), String.format("%s movie was removed successfully",
+                    movieList.get(adapterPosition).getTitle()), Toast.LENGTH_LONG).show();
+            movieList.remove(adapterPosition);
+            movieAdapter.notifyDataSetChanged();
+        }
+    };
+
+    public static void addToMovieList(Movie movie) {
+        movieList.add(movie);
+        filteredMovieList = movieList;
+        movieAdapter.notifyDataSetChanged();
+    }
 
     public MoviesFragment() {
     }
@@ -58,6 +85,8 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         this.movieListView = view.findViewById(R.id.movieListView);
 
+        FloatingActionButton fabAdd = view.findViewById(R.id.fab_add);
+
         searchEditText = view.findViewById(R.id.search_movie_bar);
 
         InputStream fileInputStream = null;
@@ -66,17 +95,16 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.movieList = Movies.getMoviesFromJsonData(fileInputStream);
-        this.filteredMovieList = movieList;
+        movieList = Movies.getMoviesFromJsonData(fileInputStream);
+        filteredMovieList = movieList;
 
-        this.movieAdapter = new MovieAdapter(view.getContext(), movieList, this);
+        movieAdapter = new MovieAdapter(view.getContext(), movieList, this);
         movieListView.setAdapter(movieAdapter);
         movieListView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
+        new ItemTouchHelper(itemTouchHCallback).attachToRecyclerView(movieListView);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -92,6 +120,11 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
             }
         });
 
+        fabAdd.setOnClickListener(view1 -> {
+            Intent intent = new Intent(this.getContext(), MovieAddFormActivity.class);
+            startActivity(intent);
+        });
+
         return view;
     }
 
@@ -100,7 +133,7 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
     public void onMovieClickListener(int position) {
         Intent intent = new Intent(this.getContext(), MovieInfoActivity.class);
 
-        this.filteredMovieList = movieAdapter.getActualFilteredList();
+        filteredMovieList = movieAdapter.getActualFilteredList();
         String filePath = "";
         try {
             filePath = "movie_data/".concat(filteredMovieList.get(position)
@@ -124,4 +157,6 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
             Log.e(TAG, e.getMessage());
         }
     }
+
+
 }
