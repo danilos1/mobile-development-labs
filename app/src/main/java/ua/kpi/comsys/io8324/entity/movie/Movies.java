@@ -1,5 +1,9 @@
 package ua.kpi.comsys.io8324.entity.movie;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -7,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Movies {
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -21,5 +26,18 @@ public class Movies {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static MovieInfo getMovieInfo(InputStream inputStream) {
+        MovieInfo movieInfo = null;
+
+        try {
+            movieInfo = mapper.readValue(inputStream, MovieInfo.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.ofNullable(movieInfo).orElse(new MovieInfo());
     }
 }

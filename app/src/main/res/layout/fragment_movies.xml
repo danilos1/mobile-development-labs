@@ -4,13 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".tabfragments.MoviesFragment">
+
+    <EditText
+        android:id="@+id/search_movie_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="35dp"
+        android:ems="10"
+        android:hint="Search movie"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawableStart="@drawable/ic_baseline_search_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-       />
+        android:layout_marginTop="50dp"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:background="#FFFFFF"
+        android:elevation="0dp"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_add_24"
+        android:tint="@android:color/white"
+        app:backgroundTint="#67A5D6"
+        app:rippleColor="#E8E7E7" />
 
 </FrameLayout>
