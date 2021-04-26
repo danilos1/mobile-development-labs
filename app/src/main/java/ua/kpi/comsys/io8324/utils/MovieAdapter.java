@@ -50,8 +50,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie movie = filteredMovieList.get(position);
-        Log.d(TAG, "filter movie list: "+filteredMovieList.toString());
-        Log.d(TAG, "position: "+position);
         if (!movie.getPoster().equals("")) {
             try {
                 InputStream ims = inflater.getContext().getAssets().open(
