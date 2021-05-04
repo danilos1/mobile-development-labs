@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,16 +15,12 @@ import java.io.InputStream;
 import ua.kpi.comsys.io8324.entity.movie.MovieInfo;
 
 public class MovieInfoActivity extends AppCompatActivity {
-    private static final String TAG = "MovieInfoActivity";
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_info);
-
         MovieInfo movieInfo = ((MovieInfo) getIntent().getSerializableExtra("movieInfo"));
-        Log.i(TAG,  String.format("movieInfo: %s", movieInfo.toString()));
 
         ImageView posterImageView = findViewById(R.id.movieImageView);
         if (!movieInfo.getPoster().equals("")) {

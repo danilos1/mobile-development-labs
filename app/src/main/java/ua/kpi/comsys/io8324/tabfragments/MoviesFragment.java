@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.Movie;
 import ua.kpi.comsys.io8324.entity.movie.MovieInfo;
 import ua.kpi.comsys.io8324.entity.movie.Movies;
-import ua.kpi.comsys.io8324.utils.AssetHelper;
+import ua.kpi.comsys.io8324.utils.ActivityHelper;
 import ua.kpi.comsys.io8324.utils.MovieAdapter;
 
 public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieListener {
@@ -91,7 +90,7 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
 
         InputStream fileInputStream = null;
         try {
-            fileInputStream = AssetHelper.getInputStreamFromFile(view.getContext(), "json/movie_list.txt");
+            fileInputStream = ActivityHelper.getInputStreamFromFile(view.getContext(), "json/movie_list.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,7 +139,7 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
                     .getImdbID())
                     .concat(".txt");
 
-            InputStream fileInputStream = AssetHelper.getInputStreamFromFile(
+            InputStream fileInputStream = ActivityHelper.getInputStreamFromFile(
                     Objects.requireNonNull(getContext()), filePath
             );
 
