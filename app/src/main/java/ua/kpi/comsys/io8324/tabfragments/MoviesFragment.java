@@ -55,13 +55,32 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            filteredMovieList = movieAdapter.getActualFilteredList();
+
             int adapterPosition = viewHolder.getAdapterPosition();
+
+            Log.d(TAG, String.format("adapterPosition: %d", adapterPosition));
+
             Toast.makeText(getContext(), String.format("%s movie was removed successfully",
-                    movieList.get(adapterPosition).getTitle()), Toast.LENGTH_LONG).show();
-            movieList.remove(adapterPosition);
+                    filteredMovieList.get(adapterPosition).getTitle()), Toast.LENGTH_LONG).show();
+
+            Log.d(TAG, String.format("filter movie list: %s", filteredMovieList.toString()));
+
+            removeDataFromFilteredMovieList(adapterPosition);
             movieAdapter.notifyDataSetChanged();
         }
     };
+
+    private void removeDataFromFilteredMovieList(int adapterPosition) {
+        Movie removedMovie = filteredMovieList.get(adapterPosition);
+        for (int i = 0; i < movieList.size(); i++) {
+            if (movieList.get(i).getImdbID().equals(removedMovie.getImdbID())) {
+                movieList.remove(i);
+                break;
+            }
+        }
+        filteredMovieList.remove(adapterPosition);
+    }
 
     public static void addToMovieList(Movie movie) {
         movieList.add(movie);
