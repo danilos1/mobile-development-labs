@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import ua.kpi.comsys.io8324.tabfragments.DrawingFragment;
 import ua.kpi.comsys.io8324.tabfragments.GeneralFragment;
+import ua.kpi.comsys.io8324.tabfragments.ImagesFragment;
 import ua.kpi.comsys.io8324.tabfragments.MoviesFragment;
 import ua.kpi.comsys.io8324.utils.ViewPagerAdapter;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private GeneralFragment generalFragment;
     private DrawingFragment drawingFragment;
     private MoviesFragment moviesFragment;
+    private ImagesFragment imagesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         generalFragment = new GeneralFragment();
         drawingFragment = new DrawingFragment();
         moviesFragment = new MoviesFragment();
+        imagesFragment = new ImagesFragment();
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(), 0
@@ -38,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(generalFragment, "General");
         viewPagerAdapter.addFragment(drawingFragment, "Charts");
         viewPagerAdapter.addFragment(moviesFragment, "Movies");
+        viewPagerAdapter.addFragment(imagesFragment, "Image list");
 
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_house_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.statistics_icon);
         tabLayout.getTabAt(2).setIcon(R.drawable.movie_icon);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_image_24);
     }
 }

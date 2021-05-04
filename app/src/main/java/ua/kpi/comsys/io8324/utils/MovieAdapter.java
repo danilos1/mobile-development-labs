@@ -108,7 +108,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 String key = sequence.toString();
                 if (key.isEmpty()) {
                     filteredMovieList = movieList;
-                    Log.d(TAG, "filteredMovieList is empty: "+filteredMovieList);
                 } else {
                     List<Movie> fltMovieList = new ArrayList<>();
                     for (Movie movie: movieList) {
