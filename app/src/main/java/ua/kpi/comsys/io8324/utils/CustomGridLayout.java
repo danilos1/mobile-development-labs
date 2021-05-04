@@ -2,9 +2,12 @@ package ua.kpi.comsys.io8324.utils;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import java.lang.reflect.Field;
 
 import ua.kpi.comsys.io8324.R;
 
@@ -58,7 +61,6 @@ public class CustomGridLayout {
 
             return getHeightDimension(start + 200, 225);
         }
-
         private int[] getHeightDimension(int start, int delta) {
             int[] dimensionalRow = new int[6];
             for (int i = 0, s = 0; i < dimensionalRow.length; i++, s++) {
@@ -90,15 +92,16 @@ public class CustomGridLayout {
         this.heightDimension = dimensionBuilder.buildHeights();
         this.widthDimension = dimensionBuilder.buildWidths();
 
-        linearLayoutGrid[0] = view.findViewById(R.id.linear_layout1);
-        linearLayoutGrid[1] = view.findViewById(R.id.linear_layout2);
-        linearLayoutGrid[2] = view.findViewById(R.id.linear_layout3);
+        for (int i = 0; i < 3; i++) {
+            linearLayoutGrid[i] = view.findViewById(
+                ActivityHelper.getResourceByString(String.format("linear_layout%d", i + 1))
+            );
+        }
 
-        imageGrid[0] = view.findViewById(R.id.grid_image1);
-        imageGrid[1] = view.findViewById(R.id.grid_image2);
-        imageGrid[2] = view.findViewById(R.id.grid_image3);
-        imageGrid[3] = view.findViewById(R.id.grid_image4);
-        imageGrid[4] = view.findViewById(R.id.grid_image5);
-        imageGrid[5] = view.findViewById(R.id.grid_image6);
+        for (int i = 0; i < 6; i++) {
+            imageGrid[i] = view.findViewById(
+                ActivityHelper.getResourceByString(String.format("grid_image%d", i + 1))
+            );
+        }
     }
 }
