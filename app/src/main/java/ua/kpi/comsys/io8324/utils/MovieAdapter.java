@@ -2,6 +2,7 @@ package ua.kpi.comsys.io8324.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private final List<Movie> movieList;
     private List<Movie> filteredMovieList;
     private OnMovieListener onMovieListener;
+
+    public void clear() {
+        int size = movieList.size();
+        movieList.clear();
+        this.notifyItemRangeRemoved(0, size);
+    }
 
     public List<Movie> getActualFilteredList() {
         return filteredMovieList;
@@ -50,22 +59,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie movie = filteredMovieList.get(position);
-        if (!movie.getPoster().equals("")) {
-            try {
-                InputStream ims = inflater.getContext().getAssets().open(
-                        "movie_posters/" + movie.getPoster());
-                Drawable d = Drawable.createFromStream(ims, null);
-                holder.movieImageView.setImageDrawable(d);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            holder.movieImageView.setImageResource(0);
-        }
+
+//        if (!movie.getPoster().equals("")) {
+//            try {
+//                InputStream ims = inflater.getContext().getAssets().open(
+//                        "movie_posters/" + movie.getPoster());
+//                Drawable d = Drawable.createFromStream(ims, null);
+//                holder.movieImageView.setImageDrawable(d);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            holder.movieImageView.setImageResource(0);
+//        }
         holder.movieTitleTextView.setText(movie.getTitle());
         holder.movieYearTextView.setText(movie.getYear());
         holder.movieTypeTextView.setText(movie.getType());
-
     }
 
     @Override
@@ -99,36 +108,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public interface OnMovieListener {
         void onMovieClickListener(int position);
-    }
-
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence sequence) {
-                String key = sequence.toString();
-                if (key.isEmpty()) {
-                    filteredMovieList = movieList;
-                } else {
-                    List<Movie> fltMovieList = new ArrayList<>();
-                    for (Movie movie: movieList) {
-                        if (movie.getTitle().contains(key)) {
-                            fltMovieList.add(movie);
-                        }
-                    }
-                    filteredMovieList = fltMovieList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredMovieList;
-
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence sequence, FilterResults results) {
-                filteredMovieList = (List<Movie>) results.values;
-                notifyDataSetChanged();
-            }
-        };
     }
 }
