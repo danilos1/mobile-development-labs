@@ -1,56 +1,37 @@
 package ua.kpi.comsys.io8324.ui.views.movie;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.Movie;
-import ua.kpi.comsys.io8324.entity.movie.MovieInfo;
-import ua.kpi.comsys.io8324.entity.movie.Movies;
-import ua.kpi.comsys.io8324.utils.ActivityHelper;
+import ua.kpi.comsys.io8324.ui.viewmodels.movie.MovieViewModel;
 import ua.kpi.comsys.io8324.ui.adapter.MovieAdapter;
 
-public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieListener {
+public class MoviesFragment extends Fragment /*implements MovieAdapter.OnMovieListener*/ {
+
     private static final String TAG = "MoviesFragment";
-
-    private static MovieAdapter movieAdapter;
-    private RecyclerView movieListView;
-    private static List<Movie> movieList;
-    private EditText searchEditText;
-    private String MOVIE_API_URL = "http://www.omdbapi.com/?apikey=7e9fe69e&s=";
+    private MovieViewModel movieViewModel;
 
 
-    private ItemTouchHelper.SimpleCallback itemTouchHCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+   /* private ItemTouchHelper.SimpleCallback itemTouchHCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -82,10 +63,7 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
     public static void addToMovieList(Movie movie) {
         movieList.add(movie);
         movieAdapter.notifyDataSetChanged();
-    }
-
-    public MoviesFragment() {
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,101 +75,29 @@ public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
-        this.movieListView = view.findViewById(R.id.movieListView);
+        FloatingActionButton addMovieButton = view.findViewById(R.id.fab_add);
 
-        FloatingActionButton fabAdd = view.findViewById(R.id.fab_add);
-
-        searchEditText = view.findViewById(R.id.search_movie_bar);
-
-        movieList = new ArrayList<>();
-        movieAdapter = new MovieAdapter(getContext(), movieList, MoviesFragment.this);
-
-        new ItemTouchHelper(itemTouchHCallback).attachToRecyclerView(movieListView);
-        searchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() < 3) {
-                    return;
-                }
-                new MovieAsyncTask().execute(MOVIE_API_URL +  s + "&page=1");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        fabAdd.setOnClickListener(view1 -> {
+        addMovieButton.setOnClickListener(v -> {
             Intent intent = new Intent(this.getContext(), MovieAddFormActivity.class);
             startActivity(intent);
         });
 
-        return view;
-    }
+        EditText searchEditText = view.findViewById(R.id.search_movie_bar);
+        RecyclerView movieListView = view.findViewById(R.id.movieListView);
+        MovieAdapter movieAdapter = new MovieAdapter(getContext());
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onMovieClickListener(int position) {
-        Intent intent = new Intent(this.getContext(), MovieInfoActivity.class);
+        movieListView.setAdapter(movieAdapter);
+        movieListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        movieList = movieAdapter.getActualFilteredList();
-        String filePath = "";
-        try {
-            filePath = "movie_data/".concat(movieList.get(position)
-                    .getImdbID())
-                    .concat(".txt");
+        this.movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        searchEditText.addTextChangedListener(movieViewModel.getMovieSearchTextListener());
 
-            InputStream fileInputStream = ActivityHelper.getInputStreamFromFile(
-                    Objects.requireNonNull(getContext()), filePath
-            );
-
-            MovieInfo movieInfo = Movies.getMovieInfo(fileInputStream);
-            intent.putExtra("movieInfo", movieInfo);
-            startActivity(intent);
-
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, String.format("cannot find specified file '%s'", filePath));
-            Toast.makeText(getContext(), "There is no found info about this movie",
-                    Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }
-
-    public class MovieAsyncTask extends AsyncTask<String, Void, InputStream> {
-        @Override
-        protected InputStream doInBackground(String... strings) {
-            InputStream data = null;
-            HttpURLConnection urlConnection = null;
-            try {
-                URL url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                data = urlConnection.getInputStream();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                urlConnection.disconnect();
-            }
-
-            return data;
-        }
-
-
-        @Override
-        protected void onPostExecute(InputStream inputStream) {
-            super.onPostExecute(inputStream);
+        LiveData<List<Movie>> movieLiveData = movieViewModel.getMovieList();
+        movieLiveData.observe(getViewLifecycleOwner(), movieList -> {
             movieAdapter.clear();
-            movieList = Movies.getMoviesFromJsonData(inputStream);
-            movieAdapter = new MovieAdapter(getContext(), movieList, MoviesFragment.this);
-            movieListView.setAdapter(movieAdapter);
-            movieListView.setLayoutManager(new LinearLayoutManager(getContext()));
-            Log.i(TAG, "movielist "+movieList);
-        }
+            movieAdapter.setMovieList(movieList);
+        });
+
+        return view;
     }
 }

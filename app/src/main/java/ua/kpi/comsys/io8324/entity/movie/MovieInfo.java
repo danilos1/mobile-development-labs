@@ -1,8 +1,10 @@
 package ua.kpi.comsys.io8324.entity.movie;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class MovieInfo implements Serializable {
     @JsonProperty("imdbID")
@@ -61,6 +63,10 @@ public class MovieInfo implements Serializable {
 
     @JsonProperty("imdbVotes")
     private String imdbVotes;
+
+    @JsonIgnore
+    private MovieInfoRatings ratings;
+
 
     public MovieInfo() {
     }
@@ -265,5 +271,43 @@ public class MovieInfo implements Serializable {
                 ", imdbRating='" + imdbRating + '\'' +
                 ", imdbVotes='" + imdbVotes + '\'' +
                 '}';
+    }
+
+    private class MovieInfoRatings {
+        private class Ratings {
+            private String source;
+            private String value;
+
+            public Ratings() {
+            }
+
+            public Ratings(String source, String value) {
+                this.source = source;
+                this.value = value;
+            }
+
+            @JsonProperty("Source")
+            public String getSource() {
+                return source;
+            }
+
+            @JsonProperty("Value")
+            public String getValue() {
+                return value;
+            }
+
+            public void setSource(String source) {
+                this.source = source;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+        }
+        private Ratings ratings;
+
+        public Ratings getRatings() {
+            return ratings;
+        }
     }
 }

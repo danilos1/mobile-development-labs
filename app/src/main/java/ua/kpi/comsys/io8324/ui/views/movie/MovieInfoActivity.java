@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -23,19 +25,9 @@ public class MovieInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_info);
         MovieInfo movieInfo = ((MovieInfo) getIntent().getSerializableExtra("movieInfo"));
 
-        ImageView posterImageView = findViewById(R.id.movieImageView);
-        if (!movieInfo.getPoster().equals("")) {
-            try {
-                InputStream ims = getApplicationContext().getAssets().open(
-                        "movie_posters/" + movieInfo.getPoster());
-                Drawable d = Drawable.createFromStream(ims, null);
-                posterImageView.setImageDrawable(d);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            posterImageView.setImageResource(0);
-        }
+        ImageView posterView = findViewById(R.id.movieImageView);
+        Picasso.get().load(movieInfo.getPoster()).into(posterView);
+
         TextView titleTextView = findViewById(R.id.titleTextView);
         TextView yearTextView = findViewById(R.id.yearTextView);
         TextView genreTextView = findViewById(R.id.genreTextView);

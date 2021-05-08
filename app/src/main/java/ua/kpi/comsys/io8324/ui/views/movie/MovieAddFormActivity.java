@@ -49,7 +49,7 @@ public class MovieAddFormActivity extends AppCompatActivity {
 
             if (fieldAreValid(title, type, year)) {
                 Movie movie = new Movie(title, year, "", type, "");
-                MoviesFragment.addToMovieList(movie);
+//                MoviesFragment.addToMovieList(movie);
                 titleEditText.setText("");
                 typeEditText.setText("");
                 yearEditText.setText("");
