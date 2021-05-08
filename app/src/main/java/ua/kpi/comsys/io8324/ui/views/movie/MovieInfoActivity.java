@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324;
+package ua.kpi.comsys.io8324.ui.views.movie;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.MovieInfo;
 
 public class MovieInfoActivity extends AppCompatActivity {

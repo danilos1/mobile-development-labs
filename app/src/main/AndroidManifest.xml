@@ -12,9 +12,9 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MobileDevelopmentLabs"
         tools:targetApi="m">
-        <activity android:name=".MovieAddFormActivity"></activity>
-        <activity android:name=".MovieInfoActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.views.movie.MovieAddFormActivity"></activity>
+        <activity android:name=".ui.views.movie.MovieInfoActivity" />
+        <activity android:name=".ui.views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

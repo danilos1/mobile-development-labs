@@ -2,14 +2,9 @@ package ua.kpi.comsys.io8324.utils;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import java.lang.reflect.Field;
-
-import ua.kpi.comsys.io8324.R;
 
 public class CustomGridLayout {
     private Activity activity;

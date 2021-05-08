@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324.utils;
+package ua.kpi.comsys.io8324.ui.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

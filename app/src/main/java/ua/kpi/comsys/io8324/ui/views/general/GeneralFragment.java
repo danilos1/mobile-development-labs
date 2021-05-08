@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324.tabfragments;
+package ua.kpi.comsys.io8324.ui.views.general;
 
 import android.os.Bundle;
 

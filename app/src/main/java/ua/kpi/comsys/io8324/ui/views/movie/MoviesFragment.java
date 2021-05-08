@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324.tabfragments;
+package ua.kpi.comsys.io8324.ui.views.movie;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -21,41 +21,24 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-import ua.kpi.comsys.io8324.MovieAddFormActivity;
-import ua.kpi.comsys.io8324.MovieInfoActivity;
 import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.Movie;
 import ua.kpi.comsys.io8324.entity.movie.MovieInfo;
 import ua.kpi.comsys.io8324.entity.movie.Movies;
 import ua.kpi.comsys.io8324.utils.ActivityHelper;
-import ua.kpi.comsys.io8324.utils.MovieAdapter;
-
-import static com.ea.async.Async.await;
-import static java.util.concurrent.CompletableFuture.completedFuture;
-import static org.apache.commons.io.IOUtils.DEFAULT_BUFFER_SIZE;
+import ua.kpi.comsys.io8324.ui.adapter.MovieAdapter;
 
 public class MoviesFragment extends Fragment implements MovieAdapter.OnMovieListener {
     private static final String TAG = "MoviesFragment";

@@ -1,10 +1,8 @@
-package ua.kpi.comsys.io8324;
+package ua.kpi.comsys.io8324.ui.views.movie;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -17,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ua.kpi.comsys.io8324.R;
 import ua.kpi.comsys.io8324.entity.movie.Movie;
-import ua.kpi.comsys.io8324.tabfragments.MoviesFragment;
 
 import static android.widget.Toast.LENGTH_SHORT;
 

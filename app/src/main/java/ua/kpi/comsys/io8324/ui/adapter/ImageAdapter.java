@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324.entity.image;
+package ua.kpi.comsys.io8324.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.IOException;
 
 import ua.kpi.comsys.io8324.R;
-import ua.kpi.comsys.io8324.tabfragments.ImagesFragment;
+import ua.kpi.comsys.io8324.entity.image.ImageGrid;
+import ua.kpi.comsys.io8324.ui.views.images.ImagesFragment;
 import ua.kpi.comsys.io8324.utils.CustomGridLayout;
 
 

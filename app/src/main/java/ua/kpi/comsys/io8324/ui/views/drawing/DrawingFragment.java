@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324.tabfragments;
+package ua.kpi.comsys.io8324.ui.views.drawing;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -27,7 +24,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 import ua.kpi.comsys.io8324.R;

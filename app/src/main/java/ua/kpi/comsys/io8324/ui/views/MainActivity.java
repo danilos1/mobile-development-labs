@@ -1,4 +1,4 @@
-package ua.kpi.comsys.io8324;
+package ua.kpi.comsys.io8324.ui.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -7,11 +7,12 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
-import ua.kpi.comsys.io8324.tabfragments.DrawingFragment;
-import ua.kpi.comsys.io8324.tabfragments.GeneralFragment;
-import ua.kpi.comsys.io8324.tabfragments.ImagesFragment;
-import ua.kpi.comsys.io8324.tabfragments.MoviesFragment;
-import ua.kpi.comsys.io8324.utils.ViewPagerAdapter;
+import ua.kpi.comsys.io8324.R;
+import ua.kpi.comsys.io8324.ui.adapter.ViewPagerAdapter;
+import ua.kpi.comsys.io8324.ui.views.drawing.DrawingFragment;
+import ua.kpi.comsys.io8324.ui.views.general.GeneralFragment;
+import ua.kpi.comsys.io8324.ui.views.images.ImagesFragment;
+import ua.kpi.comsys.io8324.ui.views.movie.MoviesFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;

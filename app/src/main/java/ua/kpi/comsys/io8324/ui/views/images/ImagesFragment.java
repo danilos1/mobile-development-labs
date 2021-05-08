@@ -1,6 +1,5 @@
-package ua.kpi.comsys.io8324.tabfragments;
+package ua.kpi.comsys.io8324.ui.views.images;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ua.kpi.comsys.io8324.R;
-import ua.kpi.comsys.io8324.entity.image.ImageAdapter;
+import ua.kpi.comsys.io8324.ui.adapter.ImageAdapter;
 import ua.kpi.comsys.io8324.entity.image.ImageGrid;
 
 import static android.app.Activity.RESULT_OK;
