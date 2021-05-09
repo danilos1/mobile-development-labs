@@ -75,7 +75,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie movie = movieList.get(position);
 
-        Picasso.get().load(movie.getPoster()).into(holder.movieImageView);
+        String noPosterUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1200px-No-Image-Placeholder.svg.png";
+        String actualPoster = movie.getPoster();
+        Picasso.get().load(actualPoster.equals("N/A") ? noPosterUrl : actualPoster)
+                .placeholder(R.drawable.image_animation)
+                .into(holder.movieImageView);
+
         holder.movieTitleTextView.setText(movie.getTitle());
         holder.movieYearTextView.setText(movie.getYear());
         holder.movieTypeTextView.setText(movie.getType());

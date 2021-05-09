@@ -26,7 +26,12 @@ public class MovieInfoActivity extends AppCompatActivity {
         MovieInfo movieInfo = ((MovieInfo) getIntent().getSerializableExtra("movieInfo"));
 
         ImageView posterView = findViewById(R.id.movieImageView);
-        Picasso.get().load(movieInfo.getPoster()).into(posterView);
+
+        String noPosterUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1200px-No-Image-Placeholder.svg.png";
+        String actualPoster = movieInfo.getPoster();
+        Picasso.get().load(actualPoster.equals("N/A") ? noPosterUrl : actualPoster)
+                .placeholder(R.drawable.image_animation)
+                .into(posterView);
 
         TextView titleTextView = findViewById(R.id.titleTextView);
         TextView yearTextView = findViewById(R.id.yearTextView);

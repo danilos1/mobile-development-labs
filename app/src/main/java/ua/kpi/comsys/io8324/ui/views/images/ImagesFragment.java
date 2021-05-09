@@ -1,8 +1,10 @@
 package ua.kpi.comsys.io8324.ui.views.images;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,19 +24,18 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class ImagesFragment extends Fragment {
-    private static final int GRID_RESOLUTION = 6;
     private static final int IMAGE_PICKER = 1;
 
     private RecyclerView imageRecycleView;
     private ImageAdapter imageAdapter;
     private FloatingActionButton imagePickerButton;
-    private ImageGrid imageGrid;
     private static TextView noImageTextView;
 
     public static void setNoImageNotificationInvisible() {
         noImageTextView.setVisibility(View.INVISIBLE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,8 +50,7 @@ public class ImagesFragment extends Fragment {
                 startActivityForResult(intent, IMAGE_PICKER);
             }
         );
-        this.imageGrid = new ImageGrid(GRID_RESOLUTION);
-        imageAdapter = new ImageAdapter(getContext(), imageGrid, getActivity());
+        imageAdapter = new ImageAdapter(getContext(), getActivity());
         imageRecycleView.setAdapter(imageAdapter);
         imageRecycleView.invalidate();
 
@@ -58,12 +58,13 @@ public class ImagesFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_PICKER  && resultCode == RESULT_OK &&
                 data != null && data.getData() != null) {
-            imageGrid.addImage(data.getData());
+            imageAdapter.addImage(data.getData());
             imageAdapter.notifyDataSetChanged();
         }
     }

@@ -29,7 +29,7 @@ public class MoviesFragment extends Fragment /*implements MovieAdapter.OnMovieLi
 
     private static final String TAG = "MoviesFragment";
     private MovieViewModel movieViewModel;
-
+    private boolean lazy;
 
    /* private ItemTouchHelper.SimpleCallback itemTouchHCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
@@ -99,5 +99,11 @@ public class MoviesFragment extends Fragment /*implements MovieAdapter.OnMovieLi
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("BYE");
     }
 }
