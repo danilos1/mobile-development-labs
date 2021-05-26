@@ -1,6 +1,9 @@
 package ua.kpi.comsys.io8324.entity.image;
 
 import android.net.Uri;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,11 @@ public class ImageGrid {
         }
 
         images.peek().addImageToGrid(image);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void addAll(List<Uri> imageUris) {
+        imageUris.forEach(this::addImage);
     }
 
     public int size() {

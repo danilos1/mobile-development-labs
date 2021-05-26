@@ -4,6 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -31,9 +32,10 @@ public class Movies {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static MovieInfo getMovieInfo(InputStream inputStream) {
         MovieInfo movieInfo = null;
-
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            movieInfo = mapper.readValue(inputStream, MovieInfo.class);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            movieInfo = objectMapper.readValue(inputStream, MovieInfo.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
